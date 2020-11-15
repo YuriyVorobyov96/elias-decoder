@@ -1,0 +1,39 @@
+
+ARCHITECTURE(ADSP-21060)
+
+
+$OBJECTS = $COMMAND_LINE_OBJECTS;
+
+MEMORY
+{
+	int_strt_seg	{ TYPE(PM RAM) START(0x20004) END(0x20007) WIDTH(48)   }
+   
+	int_sprt0_res	{ TYPE(PM RAM) START(0x20028) END(0x2002b) WIDTH(48)}
+	code_seg	{ TYPE(PM RAM) START(0x20100) END(0x20163) WIDTH(48)}
+	data_seg	{ TYPE(DM RAM) START(0x30000) END(0x303e7) WIDTH(32)}
+}
+
+
+
+PROCESSOR P0
+{
+    OUTPUT( $COMMAND_LINE_OUTPUT_FILE )
+
+    SECTIONS
+    {
+    	int_strt_seg{
+    		INPUT_SECTIONS(tst1.doj(iner_start))
+    	}>int_strt_seg
+    	int_sprt0_res{
+    		INPUT_SECTIONS(tst1.doj(inter_sport_res))
+    	}>int_sprt0_res
+    	code_seg{
+    		INPUT_SECTIONS(tst1.doj(prog))
+    	}>code_seg
+    	data_seg{
+    		INPUT_SECTIONS(tst1.doj(tcb) tst1.doj(buffers))
+    	}>data_seg
+        
+    }
+}
+
